@@ -1,13 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
 from book.views import BookView
 
+router = routers.DefaultRouter()
+router.register('api', BookView)
+
+
+
 urlpatterns = [
-    path('', BookView.as_view({'get': 'list', 'post': 'create'})),
-    path('<pk>/', BookView.as_view({
-        'get': 'retrieve',
-        'put': 'update',
-        'patch': 'partial_update',
-        'delete': 'destroy',
-    }), name='book-detail')
+    path('', include(router.urls))
 ]
